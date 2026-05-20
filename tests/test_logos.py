@@ -1,9 +1,8 @@
 import allure
-import time
 from pages.main_page import MainPage
 from pages.order_page import OrderPage
-from locators import MainPageLocators, URLS
-
+from data import URLS
+from locators import MainPageLocators
 
 
 @allure.epic("Сервис Яндекс.Самокат")
@@ -27,15 +26,8 @@ class TestLogos:
      main_page = MainPage(driver)
      main_page.open_site()
     
-     original_window = driver.current_window_handle
-
      main_page.click_to_element(MainPageLocators.YANDEX_LOGO)
+     main_page.switch_to_new_window()
+     main_page.wait_for_url_contains(URLS.DZEN_URL)
 
-     for window_handle in driver.window_handles:
-         if window_handle != original_window:
-             driver.switch_to.window(window_handle)
-             break
-            
-     time.sleep(3)
-
-     assert "dzen.ru" in driver.current_url
+     assert URLS.DZEN_URL in driver.current_url

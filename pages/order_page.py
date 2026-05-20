@@ -1,4 +1,3 @@
-import time
 import allure
 from pages.base_page import BasePage
 from selenium.webdriver.common.keys import Keys
@@ -50,16 +49,16 @@ class OrderPage(BasePage):
 
     @allure.step("Выбрать цвет самоката: {color_name}")
     def select_scooter_color(self, color_name):
-        if color_name == "black":
-            self.click_to_element(OrderPageLocators.CHECKBOX_BLACK)
-        elif color_name == "grey":
-            self.click_to_element(OrderPageLocators.CHECKBOX_GREY)
+     
+        ready_locator = (OrderPageLocators.COLOR_CHECKBOX_TEMPLATE[0], 
+                         OrderPageLocators.COLOR_CHECKBOX_TEMPLATE[1].format(color_name))
+        self.click_to_element(ready_locator)
 
     @allure.step("Подтвердить заказ в поп-апе кнопкой 'Да'")
     def confirm_order_in_popup(self):
-        button_yes = self.wait_element_to_be_clickable(OrderPageLocators.BUTTON_YES)
-        time.sleep(0.5)
-        button_yes.click()
+        self.click_to_element(OrderPageLocators.BUTTON_YES)
+
+    
     @allure.step("Получить текст заголовка об успешном создании заказа")     
     def get_success_popup_header_text(self):
         element = self.find_element_with_wait(OrderPageLocators.ORDER_SUCCESS_POPUP_HEADER)

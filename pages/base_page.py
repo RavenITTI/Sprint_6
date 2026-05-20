@@ -1,7 +1,8 @@
 import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from locators import URLS
+from data import URLS
+
 
 class BasePage:
  
@@ -49,3 +50,19 @@ class BasePage:
     def scroll_to_element(self, locator):
         element = self.find_element_with_wait(locator)
         _ = element.location_once_scrolled_into_view
+
+    @allure.step("Ожидание открытия второго окна и переключение на него")
+    def switch_to_new_window(self, time=10):
+        
+        WebDriverWait(self.driver, time).until(
+            EC.number_of_windows_to_be(2)
+        )
+        
+        self.driver.switch_to.window(self.driver.window_handles[-1])
+
+    @allure.step("Ожидать, пока в URL появится текст: {url_part}")
+    def wait_for_url_contains(self, url_part, time=10):
+        
+        return WebDriverWait(self.driver, time).until(
+            EC.url_contains(url_part)
+        )    

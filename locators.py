@@ -1,17 +1,13 @@
 from selenium.webdriver.common.by import By
 
 
-class URLS:
-    BASE_URL = "https://qa-scooter.praktikum-services.ru/"
-    ORDERS_URL = "https://qa-scooter.praktikum-services.ru/orders"
-    
+
 class MainPageLocators:
     """Локаторы для Главной страницы (Яндекс.Самокат)"""
+    # Локаторы для раздела FAQ (вопросы и ответы)
+    FAQ_QUESTION_TEMPLATE = (By.XPATH, ".//div[@class='accordion__button' and text()='{}']")
+    FAQ_ANSWER_TEMPLATE= (By.XPATH, ".//div[@class='accordion__panel']/p[text()='{}']")
     
-    # Локатор для вопросов в разделе FAQ
-    FAQ_QUESTION_TEMPLATE = (By.XPATH, "(.//div[@class='accordion__button'])[{}]")
-    FAQ_ANSWER_TEMPLATE = (By.XPATH, "(.//div[@class='accordion__panel'])[{}]")
-
     # Верхняя кнопка "Заказать" в шапке страницы
     TOP_ORDER_BUTTON = (By.XPATH, ".//div[contains(@class, 'Header_Nav')]/button[text()='Заказать']") 
     
@@ -53,6 +49,7 @@ class OrderPageLocators:
     RENT_DURATION_OPTION = (By.XPATH, ".//div[@class='Dropdown-menu']/div[text()='{}']") 
     
     # Чекбоксы выбора цвета самоката 
+    COLOR_CHECKBOX_TEMPLATE = (By.ID, "{}")
     CHECKBOX_BLACK = (By.ID, "black")
     CHECKBOX_GREY = (By.ID, "grey")
     

@@ -14,21 +14,14 @@ class MainPage(BasePage):
         self.click_to_element(MainPageLocators.BOTTOM_ORDER_BUTTON)
    
    
-    @allure.step("Кликнуть по вопросу в FAQ под номером {index}")
-    def click_faq_question(self, index):
-        
-        formatted_xpath = MainPageLocators.FAQ_QUESTION_TEMPLATE[1].format(index)
-        ready_locator = (MainPageLocators.FAQ_QUESTION_TEMPLATE[0], formatted_xpath)
-        
-        self.scroll_to_element(ready_locator)
-        self.click_to_element(ready_locator)
-
-
-    @allure.step("Получить текст ответа в FAQ под номером {index}")
-    def get_faq_answer_text(self, index):
+    @allure.step('Клик по вопросу и проверка ответа')
+    def click_and_check_faq(self, question, answer):
        
-        formatted_xpath = MainPageLocators.FAQ_ANSWER_TEMPLATE[1].format(index)
-        ready_locator = (MainPageLocators.FAQ_ANSWER_TEMPLATE[0], formatted_xpath)
+        q_loc = (MainPageLocators.FAQ_QUESTION_TEMPLATE[0], MainPageLocators.FAQ_QUESTION_TEMPLATE[1].format(question))
+        a_loc = (MainPageLocators.FAQ_ANSWER_TEMPLATE[0], MainPageLocators.FAQ_ANSWER_TEMPLATE[1].format(answer))
+      
+        self.scroll_to_element(q_loc)
+        self.click_to_element(q_loc)
         
-        element = self.find_element_with_wait(ready_locator)
-        return element.text
+        
+        return self.find_element_with_wait(a_loc).is_displayed()
